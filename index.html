@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nicolas Delfino — Agência administrativa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+:root{
+  --page:#C9D3DE; --ink:#101C2E; --paper:#EEF2F7; --white:#FBFCFD; --mark:#F4C430;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--page:#070C16}
+}
+:root[data-theme="dark"]{--page:#070C16}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  display:grid;place-items:center;background:var(--page);
+  font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;color:var(--ink);
+}
+.stage{
+  --h:min(calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)),177.78vw);
+  position:relative;overflow:hidden;container-type:size;
+  height:var(--h);width:calc(var(--h)*.5625);
+  background-color:var(--paper);
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 5.9cqw,rgba(16,28,46,.09) 5.9cqw,rgba(16,28,46,.09) 6cqw);
+}
+.head{position:absolute;left:9cqw;right:9cqw;top:16cqw;opacity:0;transform:translateY(2cqw);transition:opacity .6s,transform .6s}
+[data-scene="1"] .t1,[data-scene="2"] .t2{opacity:1;transform:none}
+.head h1{margin:0;font-size:10.5cqw;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+.head p{margin:3cqw 0 0;max-width:62cqw;font-size:4.6cqw;line-height:1.35;font-weight:600}
+
+.chips{list-style:none;margin:0;padding:0}
+.chip{
+  position:absolute;left:0;top:0;display:inline-flex;align-items:center;white-space:nowrap;
+  padding:2.2cqw 3.4cqw;font-size:5.2cqw;font-weight:800;line-height:1.2;
+  background:var(--white);border:.5cqw solid var(--ink);border-radius:1.4cqw;box-shadow:1cqw 1cqw 0 var(--ink);
+  opacity:0;transform:translate(var(--cx),var(--cy)) rotate(var(--cr)) scale(.8);
+  transition:transform .8s cubic-bezier(.2,.9,.3,1.1),opacity .4s,background-color .3s;
+}
+.chip.in{opacity:1;transform:translate(var(--cx),var(--cy)) rotate(var(--cr))}
+.chip.ord{opacity:1;transform:translate(9cqw,var(--oy)) rotate(0deg);transition-delay:var(--d)}
+.chip.done{background-color:var(--mark)}
+.ck{display:inline-block;width:0;overflow:hidden;transition:width .3s,margin .3s}
+.ck svg{display:block;width:5cqw;height:5cqw}
+.chip.done .ck{width:5cqw;margin-left:2.4cqw}
+[data-scene="3"] .chip{opacity:0;transform:translate(9cqw,calc(var(--oy) - 6cqw));transition-delay:0s}
+
+.brand{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 9cqw;opacity:0;pointer-events:none}
+[data-scene="3"] .brand{opacity:1;pointer-events:auto}
+.brand>*{opacity:0;transform:translateY(3cqw);transition:opacity .6s,transform .6s}
+[data-scene="3"] .brand>*{opacity:1;transform:none;transition-delay:calc(var(--i)*.18s + .3s)}
+.mark{width:17cqw;height:17cqw;display:grid;place-items:center;background:var(--ink);color:var(--mark);border-radius:3cqw;font-size:8cqw;font-weight:800;letter-spacing:-.04em}
+.brand h2{margin:8cqw 0 0;font-size:15cqw;line-height:.95;font-weight:800;letter-spacing:-.03em}
+.brand h2 span{display:block}
+.hl{display:inline-block!important;align-self:flex-start;background:linear-gradient(var(--mark),var(--mark)) no-repeat 0 88%/0% 42%;transition:background-size .8s .9s}
+[data-scene="3"] .hl{background-size:100% 42%}
+.brand .tag{margin:5cqw 0 0;font-size:5.4cqw;font-weight:800}
+.brand .sub{margin:1.5cqw 0 0;font-size:4.6cqw;font-weight:600;max-width:64cqw;line-height:1.3}
+.cta{align-self:flex-start;margin-top:9cqw;background:var(--ink);color:var(--paper);padding:3.4cqw 6cqw;border-radius:99cqw;font-size:4.8cqw;font-weight:800}
+
+.replay{
+  position:absolute;top:4cqw;right:4cqw;z-index:2;width:max(9cqw,44px);height:max(9cqw,44px);
+  display:grid;place-items:center;border:.4cqw solid var(--ink);border-radius:50%;
+  background:var(--white);color:var(--ink);font:inherit;font-size:5cqw;cursor:pointer;
+}
+.replay:focus-visible{outline:.8cqw solid var(--ink);outline-offset:.6cqw}
+.noanim,.noanim *{transition:none!important}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="stage" id="stage" data-scene="0" role="img" aria-label="Anúncio da Nicolas Delfino, agência administrativa: boletos, contratos, folha de pagamento, notas fiscais, agenda e documentos organizados.">
+  <button class="replay" id="replay" type="button" aria-label="Ver o anúncio de novo">↻</button>
+
+  <div class="head t1"><h1>Papelada não deveria parar a sua empresa.</h1></div>
+  <div class="head t2"><h1>Nós organizamos.</h1><p>A rotina administrativa em dia, sem você correr atrás.</p></div>
+
+  <ul class="chips" aria-hidden="true">
+    <li class="chip" style="--cx:10cqw;--cy:76cqw;--cr:-7deg;--oy:76cqw;--d:0s">Boletos<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></li>
+    <li class="chip" style="--cx:54cqw;--cy:90cqw;--cr:6deg;--oy:91cqw;--d:.1s">Contratos<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></li>
+    <li class="chip" style="--cx:12cqw;--cy:106cqw;--cr:-4deg;--oy:106cqw;--d:.2s">Folha de pagamento<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></li>
+    <li class="chip" style="--cx:52cqw;--cy:124cqw;--cr:8deg;--oy:121cqw;--d:.3s">Notas fiscais<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></li>
+    <li class="chip" style="--cx:14cqw;--cy:138cqw;--cr:5deg;--oy:136cqw;--d:.4s">Agenda<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></li>
+    <li class="chip" style="--cx:44cqw;--cy:154cqw;--cr:-6deg;--oy:151cqw;--d:.5s">Documentos<span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></li>
+  </ul>
+
+  <section class="brand">
+    <div class="mark" style="--i:0" aria-hidden="true">ND</div>
+    <h2 style="--i:1"><span>Nicolas</span><span class="hl">Delfino</span></h2>
+    <p class="tag" style="--i:2">Agência administrativa</p>
+    <p class="sub" style="--i:3">Mais tempo para cuidar do seu negócio.</p>
+    <div class="cta" style="--i:4">Fale com a gente</div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  var chips=[].slice.call(stage.querySelectorAll('.chip'));
+  var timers=[];
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function at(ms,fn){timers.push(setTimeout(fn,ms))}
+  function scene(n){stage.dataset.scene=String(n)}
+  function reset(){
+    timers.forEach(clearTimeout);timers=[];
+    stage.classList.add('noanim');
+    scene(0);
+    chips.forEach(function(c){c.classList.remove('in','ord','done')});
+    void stage.offsetWidth;
+    stage.classList.remove('noanim');
+  }
+  function play(){
+    reset();
+    if(reduced){scene(3);return}
+    at(100,function(){scene(1)});
+    chips.forEach(function(c,i){at(900+i*450,function(){c.classList.add('in')})});
+    at(5000,function(){scene(2);chips.forEach(function(c){c.classList.add('ord')})});
+    chips.forEach(function(c,i){at(6600+i*380,function(){c.classList.add('done')})});
+    at(9800,function(){scene(3)});
+  }
+  document.getElementById('replay').addEventListener('click',play);
+  play();
+})();
+</script>
+</body>
+</html>
